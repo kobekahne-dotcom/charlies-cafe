@@ -174,6 +174,10 @@
   .cdots{display:flex;gap:8px;justify-content:center;margin-top:16px}
   .cdot{width:9px;height:9px;border-radius:50%;background:var(--soft);border:none;cursor:pointer;padding:0}
   .cdot.on{background:var(--red)}
+  /* story interior slideshow */
+  .storyshow{position:relative;padding-bottom:74%;border-radius:14px;overflow:hidden;box-shadow:0 18px 44px rgba(51,38,30,.2)}
+  .storyshow .sslide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease}
+  .storyshow .sslide.active{opacity:1}
 </style>
 </head>
 <body>
@@ -214,15 +218,23 @@
       </div>
       <div class="slide">
         <div class="simg" style="background-image:url(photos/show2.jpg)"></div>
-        <div class="sinfo"><div class="sname"><span>Chicken Strips</span><span class="sprice">$15.25</span></div><div class="sdesc">Served on a bed of home-cut French fries, &amp; a side of ranch or honey mustard dipping sauce.</div></div>
+        <div class="sinfo"><div class="sname"><span>8 oz. Steak &amp; Eggs</span><span class="sprice">from $20.50</span></div><div class="sdesc">8 oz. steak with 2 XL eggs, homemade hashbrowns &amp; toast.</div></div>
       </div>
       <div class="slide">
         <div class="simg" style="background-image:url(photos/show3.jpg)"></div>
-        <div class="sinfo"><div class="sname"><span>Old-Fashioned Milkshakes</span><span class="sprice">$6.25</span></div><div class="sdesc">Chocolate, Strawberry, Vanilla. Ask server for other flavors.</div></div>
+        <div class="sinfo"><div class="sname"><span>Taco Salad</span><span class="sprice">$16.50</span></div><div class="sdesc">A bed of Greens w/ Seasoned Ground beef, Jalapeños, Onions, Tomato, Pepper Jack &amp; Cheddar cheese &amp; homemade Tortilla Chips. Served w/ Salsa &amp; Sour cream on the side.</div></div>
       </div>
       <div class="slide">
         <div class="simg" style="background-image:url(photos/show4.jpg)"></div>
-        <div class="sinfo"><div class="sname"><span>Belgian Waffles</span><span class="sprice">from $8.75</span></div><div class="sdesc">Crisp 4″ Belgian Waffle Squares, sprinkled with Powdered Sugar.</div></div>
+        <div class="sinfo"><div class="sname"><span>Biscuits &amp; Gravy</span><span class="sprice">$15.50</span></div><div class="sdesc">2 biscuits w/ Sausage gravy, &amp; hashbrowns.</div></div>
+      </div>
+      <div class="slide">
+        <div class="simg" style="background-image:url(photos/show5.jpg)"></div>
+        <div class="sinfo"><div class="sname"><span>Old-Fashioned Milkshakes</span><span class="sprice">$6.25</span></div><div class="sdesc">Chocolate, Strawberry, Vanilla. Ask server for other flavors.</div></div>
+      </div>
+      <div class="slide">
+        <div class="simg" style="background-image:url(photos/show6.jpg)"></div>
+        <div class="sinfo"><div class="sname"><span>Chicken Strips</span><span class="sprice">$15.25</span></div><div class="sdesc">Served on a bed of home-cut French fries, &amp; a side of ranch or honey mustard dipping sauce.</div></div>
       </div>
     </div>
     <button class="cnav prev" id="cprev" type="button" aria-label="Previous dish">‹</button>
@@ -488,7 +500,11 @@
 
 <section id="story">
   <div class="two">
-    <img src="photos/room.jpg" alt="Inside Charlie's Cafe — cozy diner with local photos and Coca-Cola decor" class="reveal">
+    <div class="storyshow reveal" aria-label="Inside Charlie's Cafe">
+      <div class="sslide active" style="background-image:url(photos/int1.jpg)"></div>
+      <div class="sslide" style="background-image:url(photos/int2.jpg)"></div>
+      <div class="sslide" style="background-image:url(photos/int3.jpg)"></div>
+    </div>
     <div class="reveal">
       <div class="kick">Since 1976</div>
       <div class="stitle">Our Story</div>
@@ -584,11 +600,19 @@
     slides.forEach(function(s,idx){ var d=document.createElement('button'); d.type='button'; d.className='cdot'+(idx===0?' on':''); d.addEventListener('click',function(){go(idx);start();}); dotsWrap.appendChild(d); });
     var dots=dotsWrap.querySelectorAll('.cdot');
     function go(n){ slides[i].classList.remove('active'); if(dots[i])dots[i].classList.remove('on'); i=(n+slides.length)%slides.length; slides[i].classList.add('active'); if(dots[i])dots[i].classList.add('on'); }
-    function start(){ clearInterval(timer); timer=setInterval(function(){ go(i+1); }, 4500); }
+    function start(){ clearInterval(timer); timer=setInterval(function(){ go(i+1); }, 4000); }
     var np=document.getElementById('cnext'), pv=document.getElementById('cprev');
     if(np) np.addEventListener('click',function(){ go(i+1); start(); });
     if(pv) pv.addEventListener('click',function(){ go(i-1); start(); });
     start();
+  })();
+
+  // Our Story — rotating interior photos
+  (function(){
+    var box=document.querySelector('.storyshow'); if(!box) return;
+    var s=box.querySelectorAll('.sslide'); if(s.length<2) return;
+    var i=0;
+    setInterval(function(){ s[i].classList.remove('active'); i=(i+1)%s.length; s[i].classList.add('active'); }, 5000);
   })();
 </script>
 </body>
