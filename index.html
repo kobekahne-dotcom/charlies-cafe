@@ -147,6 +147,17 @@
   }
   /* fail-safe: hero content always visible even if the entrance animation is throttled or JS is blocked */
   .hero .eyebrow,.hero h1,.hero .sub,.hero .rating,.hero .herobtns,.hero .livepill,.hero .herocard{opacity:1;transform:none;animation:none;position:relative;z-index:1}
+  /* directions chooser */
+  .mapsheet{position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
+  .mapsheet.open{display:flex}
+  .mapsheet .card{background:#fff;width:100%;max-width:420px;border-radius:18px 18px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(0,0,0,.25)}
+  .mapsheet h4{text-align:center;font-weight:800;color:var(--ink);font-size:1.05rem}
+  .mapsheet .msub{text-align:center;color:#5f5348;font-size:.82rem;font-weight:600;margin:2px 0 14px}
+  .mapopt{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--soft);border-radius:12px;margin-bottom:8px;font-weight:800;color:var(--ink);font-size:1rem}
+  .mapopt .ic{font-size:1.3rem}
+  .mapopt:hover{border-color:var(--red)}
+  .mapcancel{width:100%;text-align:center;padding:12px;background:none;border:none;color:var(--red);font-weight:800;font-size:.95rem;cursor:pointer}
+  @media(min-width:520px){.mapsheet{align-items:center}.mapsheet .card{border-radius:18px}}
 </style>
 </head>
 <body>
@@ -459,7 +470,7 @@
     <div class="vrow"><small>Phone</small>(360) 825-5191</div>
     <div class="vbtns">
       <a href="tel:+13608255191" class="btn red">📞 Call Us</a>
-      <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Charlie%27s+Cafe+1335+Roosevelt+Ave+E+Enumclaw+WA+98022" target="_blank" rel="noopener" class="btn gold">📍 Directions</a>
+      <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Charlie%27s+Cafe+1335+Roosevelt+Ave+E+Enumclaw+WA+98022" target="_blank" rel="noopener" data-dir class="btn gold">📍 Directions</a>
     </div>
     <div class="vnote">Walk-ins welcome · free parking · the local stop before Crystal Mountain &amp; Rainier</div>
   </div>
@@ -467,8 +478,19 @@
 
 <div class="actionbar">
   <a class="call" href="tel:+13608255191"><span class="ic">📞</span>Call</a>
-  <a class="dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=Charlie%27s+Cafe+1335+Roosevelt+Ave+E+Enumclaw+WA+98022" target="_blank" rel="noopener"><span class="ic">📍</span>Directions</a>
+  <a class="dir" data-dir href="https://www.google.com/maps/dir/?api=1&amp;destination=Charlie%27s+Cafe+1335+Roosevelt+Ave+E+Enumclaw+WA+98022" target="_blank" rel="noopener"><span class="ic">📍</span>Directions</a>
   <a class="menu" href="#menu"><span class="ic">🍽️</span>Menu</a>
+</div>
+
+<div class="mapsheet" id="mapSheet" aria-hidden="true">
+  <div class="card">
+    <h4>Get Directions</h4>
+    <div class="msub">1335 Roosevelt Ave E · Enumclaw, WA</div>
+    <a class="mapopt" id="mapApple" target="_blank" rel="noopener"><span class="ic">🍎</span> Apple Maps</a>
+    <a class="mapopt" id="mapGoogle" target="_blank" rel="noopener"><span class="ic">🗺️</span> Google Maps</a>
+    <a class="mapopt" id="mapWaze" target="_blank" rel="noopener"><span class="ic">🚗</span> Waze</a>
+    <button class="mapcancel" id="mapCancel" type="button">Cancel</button>
+  </div>
 </div>
 
 <footer>
@@ -502,6 +524,21 @@
         pills.forEach(function(p){ p.classList.toggle('active', p.getAttribute('href')==='#'+id); }); }});
     },{rootMargin:'-120px 0px -60% 0px'});
     cats.forEach(function(c){ mo.observe(c); });
+  })();
+
+  // Directions chooser — Apple Maps / Google Maps / Waze
+  (function(){
+    var sheet=document.getElementById('mapSheet'); if(!sheet) return;
+    var q=encodeURIComponent("Charlie's Cafe, 1335 Roosevelt Ave E, Enumclaw, WA 98022");
+    document.getElementById('mapApple').href='https://maps.apple.com/?daddr='+q;
+    document.getElementById('mapGoogle').href='https://www.google.com/maps/dir/?api=1&destination='+q;
+    document.getElementById('mapWaze').href='https://waze.com/ul?q='+q+'&navigate=yes';
+    function openSheet(e){ if(e){e.preventDefault();} sheet.classList.add('open'); }
+    function closeSheet(){ sheet.classList.remove('open'); }
+    document.querySelectorAll('[data-dir]').forEach(function(a){ a.addEventListener('click', openSheet); });
+    document.getElementById('mapCancel').addEventListener('click', closeSheet);
+    sheet.addEventListener('click', function(e){ if(e.target===sheet) closeSheet(); });
+    sheet.querySelectorAll('.mapopt').forEach(function(a){ a.addEventListener('click', function(){ setTimeout(closeSheet, 250); }); });
   })();
 </script>
 </body>
