@@ -35,7 +35,7 @@
   /* HERO */
   .hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;
     padding:120px 22px 90px;position:relative;
-    background:linear-gradient(rgba(51,38,30,.5),rgba(51,38,30,.62)),url(photos/hero.jpg) center/cover no-repeat}
+    background:linear-gradient(rgba(51,38,30,.42),rgba(51,38,30,.55)),url(photos/hero.jpg) center 30%/cover no-repeat}
   .hero::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:120px;background:linear-gradient(transparent,var(--cream));z-index:0;pointer-events:none}
   .hero .eyebrow{font-size:.8rem;letter-spacing:4px;text-transform:uppercase;font-weight:700;opacity:0;transform:translateY(16px);animation:rise 1s ease .2s forwards}
   .hero h1{font-family:'Lobster',cursive;font-weight:400;font-size:clamp(2.4rem,8vw,5rem);line-height:1.2;margin:14px 0 10px;text-shadow:0 3px 18px rgba(0,0,0,.45);opacity:0;transform:translateY(24px);animation:rise 1.1s ease .45s forwards}
@@ -158,6 +158,22 @@
   .mapopt:hover{border-color:var(--red)}
   .mapcancel{width:100%;text-align:center;padding:12px;background:none;border:none;color:var(--red);font-weight:800;font-size:.95rem;cursor:pointer}
   @media(min-width:520px){.mapsheet{align-items:center}.mapsheet .card{border-radius:18px}}
+  /* specials carousel */
+  .showcase{background:var(--cream)}
+  .carousel{position:relative;max-width:760px;margin:34px auto 0;border-radius:18px;overflow:hidden;box-shadow:0 16px 44px rgba(51,38,30,.14)}
+  .slides{position:relative;padding-bottom:66%;min-height:300px}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+  .slide.active{opacity:1}
+  .simg{position:absolute;inset:0;background-size:cover;background-position:center}
+  .sinfo{position:absolute;left:0;right:0;bottom:0;padding:44px 22px 20px;color:#fff;background:linear-gradient(transparent,rgba(20,12,8,.88))}
+  .sname{font-family:'Zilla Slab',serif;font-weight:700;font-size:1.5rem;line-height:1.15;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .sprice{color:#ffcf7a;white-space:nowrap}
+  .sdesc{font-size:.92rem;margin-top:6px;opacity:.95;line-height:1.4;max-width:560px}
+  .cnav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(255,255,255,.85);border:none;width:38px;height:38px;border-radius:50%;font-size:1.6rem;line-height:1;color:var(--red);cursor:pointer;font-weight:800}
+  .cnav.prev{left:12px}.cnav.next{right:12px}
+  .cdots{display:flex;gap:8px;justify-content:center;margin-top:16px}
+  .cdot{width:9px;height:9px;border-radius:50%;background:var(--soft);border:none;cursor:pointer;padding:0}
+  .cdot.on{background:var(--red)}
 </style>
 </head>
 <body>
@@ -185,27 +201,35 @@
   <div class="livepill" id="liveStatus">Open every day · 6 AM – 2 PM</div>
 </header>
 
-<section id="story">
-  <div class="two">
-    <img src="photos/room.jpg" alt="Inside Charlie's Cafe — cozy diner with local photos and Coca-Cola decor" class="reveal">
-    <div class="reveal">
-      <div class="kick">Since 1976</div>
-      <div class="stitle">A little red cafe with a big plate</div>
-      <p class="lead">Named for Charlotte — "Charlie" — who opened the doors and started it all, Charlie's has been the plateau's kitchen ever since. Home-cooked breakfast served all day, coffee cups that never run empty, and walls covered in local kids' senior photos. It's the stop before Crystal Mountain and Rainier, and the reason regulars keep coming back.</p>
-    </div>
+<section class="showcase" id="specials">
+  <div class="center reveal">
+    <div class="kick">Fan Favorites</div>
+    <div class="stitle">Fresh off the griddle</div>
   </div>
-</section>
-
-<section class="special">
-  <div class="two">
-    <img src="photos/dish.jpg" alt="The Cowpie at Charlie's Cafe" class="reveal">
-    <div class="reveal">
-      <div class="kick">The House Specialty</div>
-      <div class="stitle">The Cowpie</div>
-      <p class="lead">Sauteed Ham, Bacon, Onions, Green peppers, Mushrooms, &amp; 2 over medium eggs served on a bed of hashbrowns, w/ Sausage gravy on top.</p>
-      <span class="tag">The Cowpie · $18.50</span>
+  <div class="carousel reveal">
+    <div class="slides" id="slides">
+      <div class="slide active">
+        <div class="simg" style="background-image:url(photos/show1.jpg)"></div>
+        <div class="sinfo"><div class="sname"><span>The Cowpie</span><span class="sprice">$18.50</span></div><div class="sdesc">Sauteed Ham, Bacon, Onions, Green peppers, Mushrooms, &amp; 2 over medium eggs served on a bed of hashbrowns, w/ Sausage gravy on top.</div></div>
+      </div>
+      <div class="slide">
+        <div class="simg" style="background-image:url(photos/show2.jpg)"></div>
+        <div class="sinfo"><div class="sname"><span>Chicken Strips</span><span class="sprice">$15.25</span></div><div class="sdesc">Served on a bed of home-cut French fries, &amp; a side of ranch or honey mustard dipping sauce.</div></div>
+      </div>
+      <div class="slide">
+        <div class="simg" style="background-image:url(photos/show3.jpg)"></div>
+        <div class="sinfo"><div class="sname"><span>Old-Fashioned Milkshakes</span><span class="sprice">$6.25</span></div><div class="sdesc">Chocolate, Strawberry, Vanilla. Ask server for other flavors.</div></div>
+      </div>
+      <div class="slide">
+        <div class="simg" style="background-image:url(photos/show4.jpg)"></div>
+        <div class="sinfo"><div class="sname"><span>Belgian Waffles</span><span class="sprice">from $8.75</span></div><div class="sdesc">Crisp 4″ Belgian Waffle Squares, sprinkled with Powdered Sugar.</div></div>
+      </div>
     </div>
+    <button class="cnav prev" id="cprev" type="button" aria-label="Previous dish">‹</button>
+    <button class="cnav next" id="cnext" type="button" aria-label="Next dish">›</button>
   </div>
+  <div class="cdots" id="cdots"></div>
+  <div class="center" style="margin-top:24px"><a href="#menu" class="btn red">See the Full Menu</a></div>
 </section>
 
 <section id="menu">
@@ -445,20 +469,6 @@
   </div>
 </section>
 
-<section id="reviews" class="reviews">
-  <div class="center reveal">
-    <div class="kick">What the Plateau Says</div>
-    <div class="stitle">Folks keep coming back</div>
-    <div class="rbadge"><span class="stars">★★★★☆</span> 4.1 out of 5 · 91 reviews</div>
-  </div>
-  <div class="rgrid">
-    <div class="rcard reveal"><div class="q">"Huge, tasty breakfast for reasonable prices — you certainly won't go home hungry."</div><div class="who">Kevin G.</div><div class="st">★★★★★</div></div>
-    <div class="rcard reveal"><div class="q">"Yummy breakfast meals. Loved the Cowpie! Friendly, warm atmosphere."</div><div class="who">Susan K.</div><div class="st">★★★★</div></div>
-    <div class="rcard reveal"><div class="q">"Great to be able to walk to breakfast at 6 AM. Breakfast is served all day and quite delicious — the server was sweet."</div><div class="who">Joe D.</div><div class="st">★★★★★</div></div>
-  </div>
-  <div class="rsrc">Reviews from Tripadvisor · Charlie's is rated #5 of 51 restaurants in Enumclaw</div>
-</section>
-
 <section id="visit" class="visit">
   <div class="center reveal">
     <div class="kick">Come On In</div>
@@ -474,6 +484,31 @@
     </div>
     <div class="vnote">Walk-ins welcome · free parking · the local stop before Crystal Mountain &amp; Rainier</div>
   </div>
+</section>
+
+<section id="story">
+  <div class="two">
+    <img src="photos/room.jpg" alt="Inside Charlie's Cafe — cozy diner with local photos and Coca-Cola decor" class="reveal">
+    <div class="reveal">
+      <div class="kick">Since 1976</div>
+      <div class="stitle">Our Story</div>
+      <p class="lead">Named for Charlotte — "Charlie" — who opened the doors and started it all, Charlie's has been the plateau's kitchen ever since. Home-cooked breakfast served all day, coffee cups that never run empty, and walls covered in local kids' senior photos. It's the stop before Crystal Mountain and Rainier, and the reason regulars keep coming back.</p>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="reviews">
+  <div class="center reveal">
+    <div class="kick">What the Plateau Says</div>
+    <div class="stitle">Folks keep coming back</div>
+    <div class="rbadge"><span class="stars">★★★★☆</span> 4.1 out of 5 · 91 reviews</div>
+  </div>
+  <div class="rgrid">
+    <div class="rcard reveal"><div class="q">"Huge, tasty breakfast for reasonable prices — you certainly won't go home hungry."</div><div class="who">Kevin G.</div><div class="st">★★★★★</div></div>
+    <div class="rcard reveal"><div class="q">"Yummy breakfast meals. Loved the Cowpie! Friendly, warm atmosphere."</div><div class="who">Susan K.</div><div class="st">★★★★</div></div>
+    <div class="rcard reveal"><div class="q">"Great to be able to walk to breakfast at 6 AM. Breakfast is served all day and quite delicious — the server was sweet."</div><div class="who">Joe D.</div><div class="st">★★★★★</div></div>
+  </div>
+  <div class="rsrc">Reviews from Tripadvisor · Charlie's is rated #5 of 51 restaurants in Enumclaw</div>
 </section>
 
 <div class="actionbar">
@@ -539,6 +574,21 @@
     document.getElementById('mapCancel').addEventListener('click', closeSheet);
     sheet.addEventListener('click', function(e){ if(e.target===sheet) closeSheet(); });
     sheet.querySelectorAll('.mapopt').forEach(function(a){ a.addEventListener('click', function(){ setTimeout(closeSheet, 250); }); });
+  })();
+
+  // Specials carousel
+  (function(){
+    var track=document.getElementById('slides'); if(!track) return;
+    var slides=track.querySelectorAll('.slide'); if(slides.length<2) return;
+    var dotsWrap=document.getElementById('cdots'); var i=0, timer;
+    slides.forEach(function(s,idx){ var d=document.createElement('button'); d.type='button'; d.className='cdot'+(idx===0?' on':''); d.addEventListener('click',function(){go(idx);start();}); dotsWrap.appendChild(d); });
+    var dots=dotsWrap.querySelectorAll('.cdot');
+    function go(n){ slides[i].classList.remove('active'); if(dots[i])dots[i].classList.remove('on'); i=(n+slides.length)%slides.length; slides[i].classList.add('active'); if(dots[i])dots[i].classList.add('on'); }
+    function start(){ clearInterval(timer); timer=setInterval(function(){ go(i+1); }, 4500); }
+    var np=document.getElementById('cnext'), pv=document.getElementById('cprev');
+    if(np) np.addEventListener('click',function(){ go(i+1); start(); });
+    if(pv) pv.addEventListener('click',function(){ go(i-1); start(); });
+    start();
   })();
 </script>
 </body>
